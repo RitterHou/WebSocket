@@ -1,4 +1,4 @@
-聊天的前台界面，默认即会访问 index.html 页面，以下为 Nginx 的配置：
+聊天的前台界面，默认即会访问 [index.html](index.html) 页面，以下为 Nginx 的配置：
 
 	server {
 	        
