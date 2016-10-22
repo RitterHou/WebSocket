@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>在线聊天</title>
+</head>
+<body>
+<center>
+    <form onsubmit="return false;">
+        <h3>WebSocket 聊天室：</h3>
+        <textarea id="responseText" readonly="readonly" style="width: 500px; height: 300px;"></textarea><p/>
+        <input type="text" name="message" style="width: 300px">
+        <input type="button" value="发送消息" onclick="send(this.form.message.value)">
+        <input type="button" value="清空聊天记录" onclick="javascript:document.getElementById('responseText').value=''">
+    </form>
+</center>
+<script>
+if (!window.WebSocket) {
+    window.WebSocket = window.MozWebSocket; // 如果浏览器不支持 WebSocket，那就使用 MozWebSocket
+}
+var socket; // 定义一个连接
+if (window.WebSocket) {
+    socket = new WebSocket('ws://' + window.location.hostname + '/ws'); // 打开一个新的连接
+    socket.onmessage = function(event) { // 收到信息的回调函数
+        console.log('收到信息：' + event.data);
+        document.getElementById('responseText').value = document.getElementById('responseText').value + '\n' + event.data; // 获取到消息就把其显示出来
+    };
+    socket.onopen = function(event) { // 连接打开的回调函数
+        console.log('连接开启！');
+    };
+    socket.onclose = function(event) { // 连接关闭的函数函数
+        console.log('连接关闭！');
+    };
+} else {
+    alert('你的浏览器不支持 WebSocket！');
+}
+
+function send(message) {
+    if (!window.WebSocket) { // 若不支持 WebSocket，不执行发送操作
+        return;
+    }
+    if (socket.readyState == WebSocket.OPEN) { // 如果连接已打开，执行发送操作
+        socket.send(message);
+    } else {
+        alert('连接没有开启.');
+    }
+}
+</script>
+</body>
+</html>
