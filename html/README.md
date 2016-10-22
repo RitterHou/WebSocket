@@ -17,3 +17,5 @@
 	        proxy_set_header     Connection "upgrade";
 	    }
 	}
+
+备注：如果页面本身使用的是 HTTPS 协议，那么只需要把 WebSocket 连接的协议从 ws 改为 wss 就可以了。
