@@ -13,6 +13,7 @@
 	    location /ws {
 	        proxy_pass           http://127.0.0.1:8080;
 	        proxy_http_version   1.1;
+			proxy_read_timeout   300s; # Nginx 的 WebSocket 超时配置，默认 60s 自动断开链接  
 	        proxy_set_header     Upgrade $http_upgrade;
 	        proxy_set_header     Connection "upgrade";
 	    }
